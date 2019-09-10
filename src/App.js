@@ -12,23 +12,9 @@ import {
   Label,
   Input
 } from '@rebass/forms'
-const nanoid = require('nanoid')
 
 const calcAlk = bicar => bicar * 50 / 61
 const calcRa = (alk, ca, mg) => alk - ((ca / 1.4) + (mg / 1.7))
-const fraction = (grains, g) => {
-  const total = grains.reduce((acc, item) => acc + item.weight, 0)
-  return g.weight / total
-}
-const acidity = grain => grain.grainType === 'b'
-  ? -1.9 + (grain.color / 1.97)
-  : grain.grainType === 'c'
-    ? 5 + 0.453 * (grain.color / 1.97)
-    : grain.grainType === 'w'
-      ? -9.6
-      : grain.grainType === 'r'
-        ? 42
-        : 0
 
 const scaleIons = (ions, ratio) => {
   return {
@@ -42,7 +28,7 @@ const scaleIons = (ions, ratio) => {
 }
 
 function App () {
-  const [size, setSize] = useState(0)
+  const [size, setSize] = useState(17)
   const [alk, setAlk] = useState(0)
   const [ra, setRa] = useState(0)
   const [ions, setIons] = useState({
@@ -53,17 +39,13 @@ function App () {
     so: 0,
     hco: 0
   })
-  const [grains, setGrains] = useState([
-    { name: '2-row', grainType: 'b', color: 3.94, id: nanoid(), weight: 4536 },
-    { name: 'wheat', grainType: 'w', color: 3.94, id: nanoid(), weight: 454 },
-    { name: 'crystal 35', grainType: 'c', color: 68.95, id: nanoid(), weight: 227 },
-    { name: 'black patent', grainType: 'r', color: 1000, id: nanoid(), weight: 91 }
-  ])
 
   const [distilledPh, setDistilledPh] = useState(0)
   const [mashPh, setMashPh] = useState(0)
   const [ratio, setRatio] = useState(3)
   const [slope, setSlope] = useState(0)
+  const [roasted, setRoasted] = useState(0)
+  const [color, setColor] = useState(0)
   const [dilutionRatio, setDilutionRatio] = useState(0)
   const [dilutedIons, setDiluted] = useState(ions)
   const [salts, setSalts] = useState({
@@ -71,7 +53,7 @@ function App () {
     cacl: 0,
     mgso: 0
   })
-  const [ionsAfterSalts, setIonsAfterSalts] = useState({})
+  const [ionsAfterSalts, setIonsAfterSalts] = useState(ions)
   const [lactic, setLactic] = useState(0)
 
   useEffect(() => {
@@ -93,29 +75,19 @@ function App () {
     const alk = (-0.88 * 1.209 / 90.08) * 1000 * 50 * lactic / size
     const ra = (calcRa(calcAlk(ionsAfterSalts.hco), ionsAfterSalts.ca, ionsAfterSalts.mg)) + alk
     setRa(ra)
-  }, [lactic])
-
-  useEffect(() => {
-    const fGrains = grains.map(grain => {
-      grain.fraction = fraction(grains, grain)
-      return grain
-    })
-    const aGrains = fGrains.map(grain => {
-      grain.acidity = acidity(grain)
-      return grain
-    })
-    const faGrains = aGrains.map(grain => {
-      grain.fa = grain.fraction * grain.acidity
-      return grain
-    })
-    const sumFa = faGrains.reduce((acc, item) => acc + item.fa, 0)
-    setDistilledPh(5.72 - 0.0337 * sumFa)
-  }, [grains])
+  }, [lactic, ionsAfterSalts.hco, ionsAfterSalts.ca, ionsAfterSalts.mg, size])
 
   useEffect(() => {
     setSlope(0.037 + 0.014 * ratio)
-    setSize((grains.reduce((acc, item) => acc + item.weight, 0) / 1000) * ratio)
   }, [ratio])
+
+  useEffect(() => {
+    const noRoastpH = 5.6 - ((color / 1.97) * (0.18) / 12)
+    const roastpH = 5.6 - (((color / 1.97) / 12) * (0.18 * (1 - roasted) + 0.05 * roasted))
+    // 5.6 - 1.308(0.0945 + 0.033) = 5.6 - 0.16677 = 5,43
+    const ph = (roasted) => roasted === 0 ? noRoastpH : roastpH
+    setDistilledPh(ph(roasted))
+  }, [color, roasted])
 
   useEffect(() => {
     setMashPh(distilledPh + slope * ra / 50)
@@ -144,6 +116,18 @@ function App () {
 
   const onRatioChanged = e => {
     setRatio(parseFloat(e.target.value))
+  }
+
+  const onSizeChanged = e => {
+    setSize(parseFloat(e.target.value))
+  }
+
+  const onRoastedChanged = e => {
+    setRoasted(parseFloat(e.target.value) / 100)
+  }
+
+  const onColorChanged = e => {
+    setColor(parseFloat(e.target.value))
   }
 
   const onDilutionRatioChanged = e => {
@@ -249,10 +233,51 @@ function App () {
             </Flex>
           </Box>
         </Box>
-        <Heading mt={5} mb={4}>Grains</Heading>
-        {grains.map(grain =>
-          <Box>{grain.name}</Box>
-        )}
+        <Box as='form'
+          onSubmit={e => e.preventDefault()} mt={3}>
+          <Flex>
+            <Box>
+              <Label>Roasted</Label>
+              <Input
+                width={100}
+                id='roasted'
+                name='roasted'
+                type='number'
+                min='0'
+                step='0.1'
+                defaultValue='0'
+                onChange={onRoastedChanged}
+              />
+            </Box>
+            <Box>
+              <Label>Size</Label>
+              <Input
+                width={100}
+                id='size'
+                name='size'
+                type='number'
+                min='0'
+                step='0.1'
+                defaultValue={size}
+                onChange={onSizeChanged}
+              />
+            </Box>
+            <Box>
+              <Label>Color</Label>
+              <Input
+                width={100}
+                id='color'
+                name='color'
+                type='number'
+                min='0'
+                step='0.1'
+                defaultValue='0'
+                onChange={onColorChanged}
+              />
+            </Box>
+          </Flex>
+        </Box>
+
         <Box mt={4} fontWeight='bold'>
           <Flex>
             <Text pr={2}>Distilled Water Mash Ph:</Text>
