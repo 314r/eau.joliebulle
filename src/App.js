@@ -182,15 +182,16 @@ function App () {
         </Flex>
 
       </Box>
-      <Box px={5} pt={5}>
+      <Box px={5} py={5}>
         <Heading pt={3}>Beer color</Heading>
         <Box as='form'
           pt={3}
           onSubmit={e => e.preventDefault()}>
-          <Flex>
-            <Box pr={2}>
-              <Label>Roasted grain (% beer color)</Label>
+          <Flex flexDirection='column'>
+            <Flex alignItems='center' width={1 / 4} >
+              <Label width={1} pr={4}>Roasted color&nbsp;(%)</Label>
               <Input
+                width={1 / 4}
                 id='roasted'
                 name='roasted'
                 type='number'
@@ -199,11 +200,13 @@ function App () {
                 defaultValue='0'
                 onChange={onRoastedChanged}
               />
-            </Box>
+            </Flex>
 
-            <Box px={2}>
-              <Label>Beer color (EBC)</Label>
+            <Flex alignItems='center' width={1 / 4} mt={3} >
+              <Label width={1} pr={4}>Beer color&nbsp;(EBC)</Label>
               <Input
+
+                width={1 / 4}
                 id='color'
                 name='color'
                 type='number'
@@ -212,7 +215,7 @@ function App () {
                 defaultValue='0'
                 onChange={onColorChanged}
               />
-            </Box>
+            </Flex>
 
           </Flex>
         </Box>
@@ -227,9 +230,10 @@ function App () {
           pt={3}
           onSubmit={e => e.preventDefault()}>
           <Flex>
-            <Box pr={2}>
-              <Label>Mash water (L)</Label>
+            <Box pr={3}>
+              <Label>Mash water&nbsp;(L)</Label>
               <Input
+                width={100}
                 id='size'
                 name='size'
                 type='number'
@@ -239,9 +243,10 @@ function App () {
                 onChange={onSizeChanged}
               />
             </Box>
-            <Box px={2}>
-              <Label>Mash thickness (L/Kg)</Label>
+            <Box px={3}>
+              <Label>Mash thickness&nbsp;(L/Kg)</Label>
               <Input
+                width={100}
                 id='ratio'
                 name='ratio'
                 type='number'
@@ -258,9 +263,10 @@ function App () {
           onSubmit={e => e.preventDefault()}
           py={3} >
           <Flex>
-            <Box pr={2}>
-              <Label>Calcium (ppm)</Label>
+            <Box pr={3}>
+              <Label>Calcium&nbsp;(ppm)</Label>
               <Input
+                width={100}
                 id='ca'
                 name='ca'
                 type='number'
@@ -269,9 +275,10 @@ function App () {
                 onChange={onIonChange}
               />
             </Box>
-            <Box px={2}>
-              <Label>Magnesium (ppm)</Label>
+            <Box px={3}>
+              <Label>Magnesium&nbsp;(ppm)</Label>
               <Input
+                width={100}
                 id='mg'
                 name='mg'
                 type='number'
@@ -280,11 +287,10 @@ function App () {
                 onChange={onIonChange}
               />
             </Box>
-          </Flex>
-          <Flex mt={3}>
-            <Box pr={2}>
-              <Label>Sodium (ppm)</Label>
+            <Box pr={3}>
+              <Label>Sodium&nbsp;(ppm)</Label>
               <Input
+                width={100}
                 id='na'
                 name='na'
                 type='number'
@@ -293,9 +299,10 @@ function App () {
                 onChange={onIonChange}
               />
             </Box>
-            <Box px={2}>
-              <Label>Chloride (ppm)</Label>
+            <Box px={3}>
+              <Label>Chloride&nbsp;(ppm)</Label>
               <Input
+                width={100}
                 id='cl'
                 name='cl'
                 type='number'
@@ -304,9 +311,10 @@ function App () {
                 onChange={onIonChange}
               />
             </Box>
-            <Box px={2}>
-              <Label>Sulfate (ppm)</Label>
+            <Box px={3}>
+              <Label>Sulfate&nbsp;(ppm)</Label>
               <Input
+                width={100}
                 id='so'
                 name='so'
                 type='number'
@@ -315,11 +323,10 @@ function App () {
                 onChange={onIonChange}
               />
             </Box>
-          </Flex>
-          <Flex mt={3}>
-            <Box pr={2}>
-              <Label>Bicarbonates (ppm)</Label>
+            <Box pl={3}>
+              <Label>Bicarbonates&nbsp;(ppm)</Label>
               <Input
+                width={100}
                 id='hco'
                 name='hco'
                 type='number'
@@ -331,17 +338,17 @@ function App () {
           </Flex>
           <Box ml={2} mt={4} fontWeight='bold'>
             <Flex >
-              <Text pr={2}>Alkalinity (as CaCo3): </Text>
+              <Text pr={2}>Alkalinity&nbsp;(as CaCo3): </Text>
               <Text>{Math.round(alk * 10) / 10} ppm</Text>
             </Flex>
           </Box>
         </Box>
 
-        <Heading mt={5}>Alkalinity control</Heading>
+        <Heading fontSize={5} mt={5} mb={4}>Alkalinity control</Heading>
         <Heading>Dilution with reverse-osmosis water</Heading>
         <Box as='form'
           onSubmit={e => e.preventDefault()} mt={3}>
-          <Label>Dilute the source water at (%)</Label>
+          <Label>Dilute the source water at&nbsp;(%)</Label>
           <Input
             width={100}
             id='ro'
@@ -358,22 +365,22 @@ function App () {
           <Text fontWeight='bold' mt={3}>New water profile</Text>
           <Flex>
             <Box>
-              Calcium : {dilutedIons.ca}
+              Calcium:&nbsp;{dilutedIons.ca}
             </Box>
             <Box pl={3}>
-              Magnesium : {dilutedIons.mg}
+              Magnesium:&nbsp;{dilutedIons.mg}
             </Box>
             <Box pl={3}>
-              Sodium : {dilutedIons.na}
+              Sodium:&nbsp;{dilutedIons.na}
             </Box>
             <Box pl={3}>
-              Chloride : {dilutedIons.cl}
+              Chloride:&nbsp;{dilutedIons.cl}
             </Box>
             <Box pl={3}>
-              Sulfate : {dilutedIons.so}
+              Sulfate:&nbsp;{dilutedIons.so}
             </Box>
             <Box pl={3}>
-              Bicarbonates : {dilutedIons.hco}
+              Bicarbonates:&nbsp;{dilutedIons.hco}
             </Box>
           </Flex>
         </Box>
@@ -383,8 +390,9 @@ function App () {
           py={3} >
           <Flex>
             <Box pr={2}>
-              <Label>CaSO4 (g)</Label>
+              <Label>CaSO4&nbsp;(g)</Label>
               <Input
+                width={100}
                 id='caso'
                 name='caso'
                 type='number'
@@ -394,8 +402,9 @@ function App () {
               />
             </Box>
             <Box px={2}>
-              <Label>CaCl2 (g)</Label>
+              <Label>CaCl2&nbsp;(g)</Label>
               <Input
+                width={100}
                 id='cacl'
                 name='cacl'
                 type='number'
@@ -405,8 +414,9 @@ function App () {
               />
             </Box>
             <Box px={2}>
-              <Label>MgSO4 (g)</Label>
+              <Label>MgSO4&nbsp;(g)</Label>
               <Input
+                width={100}
                 id='mgso'
                 name='mgso'
                 type='number'
@@ -421,22 +431,22 @@ function App () {
           <Text fontWeight='bold' mt={3}>New water profile</Text>
           <Flex>
             <Box>
-              Calcium : {ionsAfterSalts.ca}
+              Calcium:&nbsp;{ionsAfterSalts.ca}
             </Box>
             <Box pl={3}>
-              Magnesium : {ionsAfterSalts.mg}
+              Magnesium:&nbsp;{ionsAfterSalts.mg}
             </Box>
             <Box pl={3}>
-              Sodium : {ionsAfterSalts.na}
+              Sodium:&nbsp;{ionsAfterSalts.na}
             </Box>
             <Box pl={3}>
-              Chloride : {ionsAfterSalts.cl}
+              Chloride:&nbsp;{ionsAfterSalts.cl}
             </Box>
             <Box pl={3}>
-              Sulfate : {ionsAfterSalts.so}
+              Sulfate:&nbsp;{ionsAfterSalts.so}
             </Box>
             <Box pl={3}>
-              Bicarbonates : {ionsAfterSalts.hco}
+              Bicarbonates:&nbsp;{ionsAfterSalts.hco}
             </Box>
           </Flex>
         </Box>
@@ -448,6 +458,7 @@ function App () {
             <Box pr={2}>
               <Label>Lactic acid 88% (ml)</Label>
               <Input
+                width={100}
                 id='lactic'
                 name='lactic'
                 type='number'
