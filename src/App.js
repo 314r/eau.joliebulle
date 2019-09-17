@@ -13,6 +13,17 @@ import {
   Input
 } from '@rebass/forms'
 
+const Divider = props =>
+  <Box
+    {...props}
+    as='hr'
+    sx={{
+      bg: 'gray',
+      border: 0,
+      height: 1
+    }}
+  />
+
 const calcAlk = bicar => bicar * 50 / 61
 const calcRa = (alk, ca, mg) => alk - ((ca / 1.4) + (mg / 1.7))
 
@@ -84,7 +95,6 @@ function App () {
   useEffect(() => {
     const noRoastpH = 5.6 - ((color / 1.97) * (0.18) / 12)
     const roastpH = 5.6 - (((color / 1.97) / 12) * (0.18 * (1 - roasted) + 0.05 * roasted))
-    // 5.6 - 1.308(0.0945 + 0.033) = 5.6 - 0.16677 = 5,43
     const ph = (roasted) => roasted === 0 ? noRoastpH : roastpH
     setDistilledPh(ph(roasted))
   }, [color, roasted])
@@ -149,14 +159,107 @@ function App () {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box p={4}>
-        <Heading>Water report</Heading>
+
+      <Box
+        width='100%'
+        height='48px'
+        sx={{
+          position: 'fixed',
+          bg: '#fff'
+        }}
+      >
+        <Flex justifyContent='space-between'>
+          <Flex pt={3} pl={3} fontWeight='500'>
+            <Text as='span' color='#735DD0'>/</Text>
+            <Text as='span' color='#47B881'>eau</Text>
+            <Text as='span'color='#735DD0'>.</Text>
+            <Text as='span' color='#ffac07'>joliebulle</Text>
+          </Flex>
+          <Flex pt={3} fontWeight='bold'>
+            <Text px={3} >Residual Alkalinity (as CaCO3) : {Math.round(ra * 10) / 10} </Text>
+            <Text px={3} >Mash pH : {Math.round(mashPh * 100) / 100}</Text>
+          </Flex>
+        </Flex>
+
+      </Box>
+      <Box px={5} pt={5}>
+        <Heading pt={3}>Beer color</Heading>
+        <Box as='form'
+          pt={3}
+          onSubmit={e => e.preventDefault()}>
+          <Flex>
+            <Box pr={2}>
+              <Label>Roasted grain (% beer color)</Label>
+              <Input
+                id='roasted'
+                name='roasted'
+                type='number'
+                min='0'
+                step='0.1'
+                defaultValue='0'
+                onChange={onRoastedChanged}
+              />
+            </Box>
+
+            <Box px={2}>
+              <Label>Beer color (EBC)</Label>
+              <Input
+                id='color'
+                name='color'
+                type='number'
+                min='0'
+                step='0.1'
+                defaultValue='0'
+                onChange={onColorChanged}
+              />
+            </Box>
+
+          </Flex>
+        </Box>
+        <Box mt={4} fontWeight='bold'>
+          <Flex>
+            <Text pr={2}>Distilled Water Mash Ph:</Text>
+            <Text>{Math.round(distilledPh * 1000) / 1000}</Text>
+          </Flex>
+        </Box>
+        <Heading pt={5}>Mash</Heading>
+        <Box as='form'
+          pt={3}
+          onSubmit={e => e.preventDefault()}>
+          <Flex>
+            <Box pr={2}>
+              <Label>Mash water (L)</Label>
+              <Input
+                id='size'
+                name='size'
+                type='number'
+                min='0'
+                step='0.1'
+                defaultValue={size}
+                onChange={onSizeChanged}
+              />
+            </Box>
+            <Box px={2}>
+              <Label>Mash thickness (L/Kg)</Label>
+              <Input
+                id='ratio'
+                name='ratio'
+                type='number'
+                min='0'
+                step='0.1'
+                defaultValue='3'
+                onChange={onRatioChanged}
+              />
+            </Box>
+          </Flex>
+        </Box>
+        <Heading pt={5}>Water report</Heading>
         <Box as='form'
           onSubmit={e => e.preventDefault()}
           py={3} >
           <Flex>
-            <Box px={2}>
-              <Label>Calcium</Label>
+            <Box pr={2}>
+              <Label>Calcium (ppm)</Label>
               <Input
                 id='ca'
                 name='ca'
@@ -167,7 +270,7 @@ function App () {
               />
             </Box>
             <Box px={2}>
-              <Label>Magnesium</Label>
+              <Label>Magnesium (ppm)</Label>
               <Input
                 id='mg'
                 name='mg'
@@ -177,8 +280,10 @@ function App () {
                 onChange={onIonChange}
               />
             </Box>
-            <Box px={2}>
-              <Label>Sodium</Label>
+          </Flex>
+          <Flex mt={3}>
+            <Box pr={2}>
+              <Label>Sodium (ppm)</Label>
               <Input
                 id='na'
                 name='na'
@@ -189,7 +294,7 @@ function App () {
               />
             </Box>
             <Box px={2}>
-              <Label>Chloride</Label>
+              <Label>Chloride (ppm)</Label>
               <Input
                 id='cl'
                 name='cl'
@@ -200,7 +305,7 @@ function App () {
               />
             </Box>
             <Box px={2}>
-              <Label>Sulfate</Label>
+              <Label>Sulfate (ppm)</Label>
               <Input
                 id='so'
                 name='so'
@@ -210,8 +315,10 @@ function App () {
                 onChange={onIonChange}
               />
             </Box>
-            <Box px={2}>
-              <Label>Bicarbonates</Label>
+          </Flex>
+          <Flex mt={3}>
+            <Box pr={2}>
+              <Label>Bicarbonates (ppm)</Label>
               <Input
                 id='hco'
                 name='hco'
@@ -225,86 +332,11 @@ function App () {
           <Box ml={2} mt={4} fontWeight='bold'>
             <Flex >
               <Text pr={2}>Alkalinity (as CaCo3): </Text>
-              <Text>{Math.round(alk * 10) / 10}</Text>
-            </Flex>
-            <Flex>
-              <Text pr={2}>Residual alkinity: </Text>
-              <Text>{ra}</Text>
+              <Text>{Math.round(alk * 10) / 10} ppm</Text>
             </Flex>
           </Box>
         </Box>
-        <Box as='form'
-          onSubmit={e => e.preventDefault()} mt={3}>
-          <Flex>
-            <Box>
-              <Label>Roasted</Label>
-              <Input
-                width={100}
-                id='roasted'
-                name='roasted'
-                type='number'
-                min='0'
-                step='0.1'
-                defaultValue='0'
-                onChange={onRoastedChanged}
-              />
-            </Box>
-            <Box>
-              <Label>Size</Label>
-              <Input
-                width={100}
-                id='size'
-                name='size'
-                type='number'
-                min='0'
-                step='0.1'
-                defaultValue={size}
-                onChange={onSizeChanged}
-              />
-            </Box>
-            <Box>
-              <Label>Color</Label>
-              <Input
-                width={100}
-                id='color'
-                name='color'
-                type='number'
-                min='0'
-                step='0.1'
-                defaultValue='0'
-                onChange={onColorChanged}
-              />
-            </Box>
-          </Flex>
-        </Box>
 
-        <Box mt={4} fontWeight='bold'>
-          <Flex>
-            <Text pr={2}>Distilled Water Mash Ph:</Text>
-            <Text>{Math.round(distilledPh * 1000) / 1000}</Text>
-          </Flex>
-        </Box>
-        <Box as='form'
-          onSubmit={e => e.preventDefault()} mt={3}>
-          <Label>Mash thickness (L/Kg)</Label>
-          <Input
-            width={100}
-            id='ratio'
-            name='ratio'
-            type='number'
-            min='0'
-            step='0.1'
-            defaultValue='3'
-            onChange={onRatioChanged}
-          />
-        </Box>
-        <Box>Volume : {size}</Box>
-        <Box mt={4} fontWeight='bold'>
-          <Flex>
-            <Text pr={2}> Mash Ph:</Text>
-            <Text>{Math.round(mashPh * 100) / 100}</Text>
-          </Flex>
-        </Box>
         <Heading mt={5}>Alkalinity control</Heading>
         <Heading>Dilution with reverse-osmosis water</Heading>
         <Box as='form'
@@ -350,8 +382,8 @@ function App () {
           onSubmit={e => e.preventDefault()}
           py={3} >
           <Flex>
-            <Box px={2}>
-              <Label>CaSO4</Label>
+            <Box pr={2}>
+              <Label>CaSO4 (g)</Label>
               <Input
                 id='caso'
                 name='caso'
@@ -362,7 +394,7 @@ function App () {
               />
             </Box>
             <Box px={2}>
-              <Label>CaCl2</Label>
+              <Label>CaCl2 (g)</Label>
               <Input
                 id='cacl'
                 name='cacl'
@@ -373,7 +405,7 @@ function App () {
               />
             </Box>
             <Box px={2}>
-              <Label>MgSO4</Label>
+              <Label>MgSO4 (g)</Label>
               <Input
                 id='mgso'
                 name='mgso'
@@ -413,8 +445,8 @@ function App () {
           onSubmit={e => e.preventDefault()}
           py={3} >
           <Flex>
-            <Box px={2}>
-              <Label>Lactic acid</Label>
+            <Box pr={2}>
+              <Label>Lactic acid 88% (ml)</Label>
               <Input
                 id='lactic'
                 name='lactic'
