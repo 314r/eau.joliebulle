@@ -13,17 +13,6 @@ import {
   Input
 } from '@rebass/forms'
 
-const Divider = props =>
-  <Box
-    {...props}
-    as='hr'
-    sx={{
-      bg: 'gray',
-      border: 0,
-      height: 1
-    }}
-  />
-
 const calcAlk = bicar => bicar * 50 / 61
 const calcRa = (alk, ca, mg) => alk - ((ca / 1.4) + (mg / 1.7))
 
@@ -171,9 +160,9 @@ function App () {
         <Flex justifyContent='space-between'>
           <Flex pt={3} pl={3} fontWeight='500'>
             <Text as='span' color='#735DD0'>/</Text>
-            <Text as='span' color='#47B881'>eau</Text>
+            <Text as='span' color='#aa00cc'>eau</Text>
             <Text as='span'color='#735DD0'>.</Text>
-            <Text as='span' color='#ffac07'>joliebulle</Text>
+            <Text as='span' color='#FF00AA'>joliebulle</Text>
           </Flex>
           <Flex pt={3} fontWeight='bold'>
             <Text px={3} >Residual Alkalinity (as CaCO3) : {Math.round(ra * 10) / 10} </Text>
@@ -205,7 +194,6 @@ function App () {
             <Flex alignItems='center' width={1 / 4} mt={3} >
               <Label width={1} pr={4}>Beer color&nbsp;(EBC)</Label>
               <Input
-
                 width={1 / 4}
                 id='color'
                 name='color'
@@ -216,7 +204,6 @@ function App () {
                 onChange={onColorChanged}
               />
             </Flex>
-
           </Flex>
         </Box>
         <Box mt={4} fontWeight='bold'>
@@ -229,8 +216,8 @@ function App () {
         <Box as='form'
           pt={3}
           onSubmit={e => e.preventDefault()}>
-          <Flex>
-            <Box pr={3}>
+          <Flex flexDirection='column'>
+            <Flex alignItems='center' width={1 / 4}>
               <Label>Mash water&nbsp;(L)</Label>
               <Input
                 width={100}
@@ -242,8 +229,8 @@ function App () {
                 defaultValue={size}
                 onChange={onSizeChanged}
               />
-            </Box>
-            <Box px={3}>
+            </Flex>
+            <Flex alignItems='center' width={1 / 4} mt={3}>
               <Label>Mash thickness&nbsp;(L/Kg)</Label>
               <Input
                 width={100}
@@ -255,7 +242,7 @@ function App () {
                 defaultValue='3'
                 onChange={onRatioChanged}
               />
-            </Box>
+            </Flex>
           </Flex>
         </Box>
         <Heading pt={5}>Water report</Heading>
