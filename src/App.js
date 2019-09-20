@@ -159,9 +159,8 @@ function App () {
       >
         <Flex justifyContent='space-between' width={1} flexWrap='wrap'>
           <Flex pt={3} pl={3} fontWeight='500' width={[1 / 4, 1 / 2, 1 / 4]}>
-            <Text as='span' color='#735DD0'>/</Text>
-            <Text as='span' color='#aa00cc'>eau.</Text>
-            <Text as='span' color='#FF00AA'>joliebulle</Text>
+            <Text as='span' color='#735DD0'>/eau.<span style={{ color: '#FF00AA' }}>joliebulle</span></Text>
+
           </Flex>
           <Flex pt={3} fontWeight='bold' width={[3 / 4, 1 / 2, 1 / 2]} justifyContent='flex-end'>
             <Text px={3} >Residual Alkalinity (as CaCO3) : {Math.round(ra * 10) / 10} </Text>
@@ -207,7 +206,7 @@ function App () {
         </Box>
         <Box mt={4} fontWeight='bold'>
           <Flex>
-            <Text pr={2}>Distilled Water Mash Ph:</Text>
+            <Text pr={2}>Distilled Water Mash pH:</Text>
             <Text>{Math.round(distilledPh * 1000) / 1000}</Text>
           </Flex>
         </Box>
@@ -374,8 +373,8 @@ function App () {
         <Box as='form'
           onSubmit={e => e.preventDefault()}
           py={3} mt={3}>
-          <Flex>
-            <Box pr={2}>
+          <Flex flexWrap='wrap'>
+            <Box mr={2} mt={2} width={[1, 1 / 4, 1 / 8]}>
               <Label>CaSO4&nbsp;(g)</Label>
               <Input
                 width={100}
@@ -387,7 +386,7 @@ function App () {
                 onChange={onSaltChanged}
               />
             </Box>
-            <Box px={2}>
+            <Box mr={2} mt={2} width={[1, 1 / 4, 1 / 8]}>
               <Label>CaCl2&nbsp;(g)</Label>
               <Input
                 width={100}
@@ -399,7 +398,7 @@ function App () {
                 onChange={onSaltChanged}
               />
             </Box>
-            <Box px={2}>
+            <Box mr={2} mt={2} width={[1, 1 / 4, 1 / 8]}>
               <Label>MgSO4&nbsp;(g)</Label>
               <Input
                 width={100}
