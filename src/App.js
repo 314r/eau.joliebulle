@@ -350,22 +350,22 @@ function App () {
           <Text fontWeight='bold' mt={3}>New water profile</Text>
           <Flex flexWrap='wrap'>
             <Box mt={2} mr={2} width={[1, 1 / 4, 1 / 4]}>
-              Calcium:&nbsp;{dilutedIons.ca}&nbsp;ppm
+              Calcium:&nbsp;{Math.round(dilutedIons.ca * 10) / 10}&nbsp;ppm
             </Box>
             <Box mt={2} mr={2} width={[1, 1 / 4, 1 / 4]}>
-              Magnesium:&nbsp;{dilutedIons.mg}&nbsp;ppm
+              Magnesium:&nbsp;{Math.round(dilutedIons.mg * 10) / 10}&nbsp;ppm
             </Box>
             <Box mt={2} mr={2} width={[1, 1 / 4, 1 / 4]}>
-              Sodium:&nbsp;{dilutedIons.na}&nbsp;ppm
+              Sodium:&nbsp;{Math.round(dilutedIons.na * 10) / 10}&nbsp;ppm
             </Box>
             <Box mt={2} mr={2} width={[1, 1 / 4, 1 / 4]}>
-              Chloride:&nbsp;{dilutedIons.cl}&nbsp;ppm
+              Chloride:&nbsp;{Math.round(dilutedIons.cl * 10) / 10}&nbsp;ppm
             </Box>
             <Box mt={2} mr={2} width={[1, 1 / 4, 1 / 4]}>
-              Sulfate:&nbsp;{dilutedIons.so}&nbsp;ppm
+              Sulfate:&nbsp;{Math.round(dilutedIons.so * 10) / 10}&nbsp;ppm
             </Box>
             <Box mt={2} width={[1, 1 / 4, 1 / 8]}>
-              Bicarbonates:&nbsp;{dilutedIons.hco}&nbsp;ppm
+              Bicarbonates:&nbsp;{Math.round(dilutedIons.hco * 10) / 10}&nbsp;ppm
             </Box>
           </Flex>
         </Box>
@@ -416,22 +416,22 @@ function App () {
           <Text fontWeight='bold' mt={3}>New water profile</Text>
           <Flex flexWrap='wrap'>
             <Box mr={2} mt={2} width={[1, 1 / 4, 1 / 4]}>
-              Calcium:&nbsp;{ionsAfterSalts.ca}&nbsp;ppm
+              Calcium:&nbsp;{Math.round(ionsAfterSalts.ca * 10) / 10}&nbsp;ppm
             </Box>
             <Box mr={2} mt={2} width={[1, 1 / 4, 1 / 4]}>
-              Magnesium:&nbsp;{ionsAfterSalts.mg}&nbsp;ppm
+              Magnesium:&nbsp;{Math.round(ionsAfterSalts.mg * 10) / 10}&nbsp;ppm
             </Box>
             <Box mr={2} mt={2} width={[1, 1 / 4, 1 / 4]}>
-              Sodium:&nbsp;{ionsAfterSalts.na}&nbsp;ppm
+              Sodium:&nbsp;{Math.round(ionsAfterSalts.na * 10) / 10}&nbsp;ppm
             </Box>
             <Box mr={2} mt={2} width={[1, 1 / 4, 1 / 4]}>
-              Chloride:&nbsp;{ionsAfterSalts.cl}&nbsp;ppm
+              Chloride:&nbsp;{Math.round(ionsAfterSalts.cl * 10) / 10}&nbsp;ppm
             </Box>
             <Box mr={2} mt={2} width={[1, 1 / 4, 1 / 4]}>
-              Sulfate:&nbsp;{ionsAfterSalts.so}&nbsp;ppm
+              Sulfate:&nbsp;{Math.round(ionsAfterSalts.so * 10) / 10}&nbsp;ppm
             </Box>
             <Box mt={2} width={[1, 1 / 4, 1 / 8]}>
-              Bicarbonates:&nbsp;{ionsAfterSalts.hco}&nbsp;ppm
+              Bicarbonates:&nbsp;{Math.round(ionsAfterSalts.hco * 10) / 10}&nbsp;ppm
             </Box>
           </Flex>
         </Box>
