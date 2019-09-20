@@ -356,26 +356,26 @@ function App () {
           />
         </Box>
         <Box>
-          <Text fontWeight='bold' mt={3}>New water profile</Text>
+          <Text fontWeight='bold' sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} mt={4} color='#FF00AA'>New water profile</Text>
           <Flex flexWrap='wrap'>
-            <Box mt={2} mr={2} width={[1, 1 / 4, 1 / 4]}>
+            <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mt={2} mr={2} width={[1, 1 / 4, 1 / 4]}>
               Calcium:&nbsp;{Math.round(dilutedIons.ca * 10) / 10}&nbsp;ppm
-            </Box>
-            <Box mt={2} mr={2} width={[1, 1 / 4, 1 / 4]}>
+            </Text>
+            <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mt={2} mr={2} width={[1, 1 / 4, 1 / 4]}>
               Magnesium:&nbsp;{Math.round(dilutedIons.mg * 10) / 10}&nbsp;ppm
-            </Box>
-            <Box mt={2} mr={2} width={[1, 1 / 4, 1 / 4]}>
+            </Text>
+            <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mt={2} mr={2} width={[1, 1 / 4, 1 / 4]}>
               Sodium:&nbsp;{Math.round(dilutedIons.na * 10) / 10}&nbsp;ppm
-            </Box>
-            <Box mt={2} mr={2} width={[1, 1 / 4, 1 / 4]}>
+            </Text>
+            <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mt={2} mr={2} width={[1, 1 / 4, 1 / 4]}>
               Chloride:&nbsp;{Math.round(dilutedIons.cl * 10) / 10}&nbsp;ppm
-            </Box>
-            <Box mt={2} mr={2} width={[1, 1 / 4, 1 / 4]}>
+            </Text>
+            <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mt={2} mr={2} width={[1, 1 / 4, 1 / 4]}>
               Sulfate:&nbsp;{Math.round(dilutedIons.so * 10) / 10}&nbsp;ppm
-            </Box>
-            <Box mt={2} width={[1, 1 / 4, 1 / 8]}>
+            </Text>
+            <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mt={2} width={[1, 1 / 4, 1 / 8]}>
               Bicarbonates:&nbsp;{Math.round(dilutedIons.hco * 10) / 10}&nbsp;ppm
-            </Box>
+            </Text>
           </Flex>
         </Box>
         <Heading mt={5}>Salt additions</Heading>
@@ -422,26 +422,26 @@ function App () {
           </Flex>
         </Box>
         <Box>
-          <Text fontWeight='bold' mt={3}>New water profile</Text>
+          <Text fontWeight='bold' sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} mt={4} color='#FF00AA'>New water profile</Text>
           <Flex flexWrap='wrap'>
-            <Box mr={2} mt={2} width={[1, 1 / 4, 1 / 4]}>
+            <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mr={2} mt={2} width={[1, 1 / 4, 1 / 4]}>
               Calcium:&nbsp;{Math.round(ionsAfterSalts.ca * 10) / 10}&nbsp;ppm
-            </Box>
-            <Box mr={2} mt={2} width={[1, 1 / 4, 1 / 4]}>
+            </Text>
+            <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mr={2} mt={2} width={[1, 1 / 4, 1 / 4]}>
               Magnesium:&nbsp;{Math.round(ionsAfterSalts.mg * 10) / 10}&nbsp;ppm
-            </Box>
-            <Box mr={2} mt={2} width={[1, 1 / 4, 1 / 4]}>
+            </Text>
+            <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mr={2} mt={2} width={[1, 1 / 4, 1 / 4]}>
               Sodium:&nbsp;{Math.round(ionsAfterSalts.na * 10) / 10}&nbsp;ppm
-            </Box>
-            <Box mr={2} mt={2} width={[1, 1 / 4, 1 / 4]}>
+            </Text>
+            <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mr={2} mt={2} width={[1, 1 / 4, 1 / 4]}>
               Chloride:&nbsp;{Math.round(ionsAfterSalts.cl * 10) / 10}&nbsp;ppm
-            </Box>
-            <Box mr={2} mt={2} width={[1, 1 / 4, 1 / 4]}>
+            </Text>
+            <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mr={2} mt={2} width={[1, 1 / 4, 1 / 4]}>
               Sulfate:&nbsp;{Math.round(ionsAfterSalts.so * 10) / 10}&nbsp;ppm
-            </Box>
-            <Box mt={2} width={[1, 1 / 4, 1 / 8]}>
+            </Text>
+            <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mt={2} width={[1, 1 / 4, 1 / 8]}>
               Bicarbonates:&nbsp;{Math.round(ionsAfterSalts.hco * 10) / 10}&nbsp;ppm
-            </Box>
+            </Text>
           </Flex>
         </Box>
         <Heading mt={5}>Acid additions</Heading>
