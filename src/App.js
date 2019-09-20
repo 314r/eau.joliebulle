@@ -157,14 +157,13 @@ function App () {
           bg: '#fff'
         }}
       >
-        <Flex justifyContent='space-between'>
-          <Flex pt={3} pl={3} fontWeight='500'>
+        <Flex justifyContent='space-between' width={1} flexWrap='wrap'>
+          <Flex pt={3} pl={3} fontWeight='500' width={[1 / 4, 1 / 2, 1 / 4]}>
             <Text as='span' color='#735DD0'>/</Text>
-            <Text as='span' color='#aa00cc'>eau</Text>
-            <Text as='span'color='#735DD0'>.</Text>
+            <Text as='span' color='#aa00cc'>eau.</Text>
             <Text as='span' color='#FF00AA'>joliebulle</Text>
           </Flex>
-          <Flex pt={3} fontWeight='bold'>
+          <Flex pt={3} fontWeight='bold' width={[3 / 4, 1 / 2, 1 / 2]} justifyContent='flex-end'>
             <Text px={3} >Residual Alkalinity (as CaCO3) : {Math.round(ra * 10) / 10} </Text>
             <Text px={3} >Mash pH : {Math.round(mashPh * 100) / 100}</Text>
           </Flex>
@@ -177,7 +176,7 @@ function App () {
           pt={3}
           onSubmit={e => e.preventDefault()}>
           <Flex flexDirection='column'>
-            <Flex alignItems='center' width={1 / 4} >
+            <Flex alignItems='center' width={[1, 1 / 2, 1 / 4]} >
               <Label width={1} pr={4}>Roasted color&nbsp;(%)</Label>
               <Input
                 width={1 / 4}
@@ -191,7 +190,7 @@ function App () {
               />
             </Flex>
 
-            <Flex alignItems='center' width={1 / 4} mt={3} >
+            <Flex alignItems='center' width={[1, 1 / 2, 1 / 4]} mt={3} >
               <Label width={1} pr={4}>Beer color&nbsp;(EBC)</Label>
               <Input
                 width={1 / 4}
@@ -217,10 +216,10 @@ function App () {
           pt={3}
           onSubmit={e => e.preventDefault()}>
           <Flex flexDirection='column'>
-            <Flex alignItems='center' width={1 / 4}>
-              <Label>Mash water&nbsp;(L)</Label>
+            <Flex alignItems='center' width={[1, 1 / 2, 1 / 4]}>
+              <Label width={1}>Mash water&nbsp;(L)</Label>
               <Input
-                width={100}
+                width={1 / 4}
                 id='size'
                 name='size'
                 type='number'
@@ -230,10 +229,10 @@ function App () {
                 onChange={onSizeChanged}
               />
             </Flex>
-            <Flex alignItems='center' width={1 / 4} mt={3}>
-              <Label>Mash thickness&nbsp;(L/Kg)</Label>
+            <Flex alignItems='center' width={[1, 1 / 2, 1 / 4]} mt={3}>
+              <Label width={1}>Mash thickness&nbsp;(L/Kg)</Label>
               <Input
-                width={100}
+                width={1 / 4}
                 id='ratio'
                 name='ratio'
                 type='number'
@@ -249,8 +248,8 @@ function App () {
         <Box as='form'
           onSubmit={e => e.preventDefault()}
           py={3} >
-          <Flex>
-            <Box pr={3}>
+          <Flex flexWrap='wrap'>
+            <Box width={[1, 1 / 4, 1 / 8]} mr={3} mt={2}>
               <Label>Calcium&nbsp;(ppm)</Label>
               <Input
                 width={100}
@@ -262,7 +261,7 @@ function App () {
                 onChange={onIonChange}
               />
             </Box>
-            <Box px={3}>
+            <Box width={[1, 1 / 4, 1 / 8]} mr={3} mt={2}>
               <Label>Magnesium&nbsp;(ppm)</Label>
               <Input
                 width={100}
@@ -274,7 +273,7 @@ function App () {
                 onChange={onIonChange}
               />
             </Box>
-            <Box pr={3}>
+            <Box width={[1, 1 / 4, 1 / 8]} mr={3} mt={2}>
               <Label>Sodium&nbsp;(ppm)</Label>
               <Input
                 width={100}
@@ -286,7 +285,7 @@ function App () {
                 onChange={onIonChange}
               />
             </Box>
-            <Box px={3}>
+            <Box width={[1, 1 / 4, 1 / 8]} mr={3} mt={2}>
               <Label>Chloride&nbsp;(ppm)</Label>
               <Input
                 width={100}
@@ -298,7 +297,7 @@ function App () {
                 onChange={onIonChange}
               />
             </Box>
-            <Box px={3}>
+            <Box width={[1, 1 / 4, 1 / 8]} mr={3} mt={2}>
               <Label>Sulfate&nbsp;(ppm)</Label>
               <Input
                 width={100}
@@ -310,7 +309,7 @@ function App () {
                 onChange={onIonChange}
               />
             </Box>
-            <Box pl={3}>
+            <Box width={[1, 1 / 4, 1 / 8]} mt={2}>
               <Label>Bicarbonates&nbsp;(ppm)</Label>
               <Input
                 width={100}
@@ -350,23 +349,23 @@ function App () {
         </Box>
         <Box>
           <Text fontWeight='bold' mt={3}>New water profile</Text>
-          <Flex>
-            <Box>
+          <Flex flexWrap='wrap'>
+            <Box pr={3} width={[1, 1 / 4, 1 / 8]}>
               Calcium:&nbsp;{dilutedIons.ca}
             </Box>
-            <Box pl={3}>
+            <Box pr={3} width={[1, 1 / 4, 1 / 8]}>
               Magnesium:&nbsp;{dilutedIons.mg}
             </Box>
-            <Box pl={3}>
+            <Box pr={3} width={[1, 1 / 4, 1 / 8]}>
               Sodium:&nbsp;{dilutedIons.na}
             </Box>
-            <Box pl={3}>
+            <Box pr={3} width={[1, 1 / 4, 1 / 8]}>
               Chloride:&nbsp;{dilutedIons.cl}
             </Box>
-            <Box pl={3}>
+            <Box pr={3} width={[1, 1 / 4, 1 / 8]}>
               Sulfate:&nbsp;{dilutedIons.so}
             </Box>
-            <Box pl={3}>
+            <Box width={[1, 1 / 4, 1 / 8]}>
               Bicarbonates:&nbsp;{dilutedIons.hco}
             </Box>
           </Flex>
@@ -416,23 +415,23 @@ function App () {
         </Box>
         <Box>
           <Text fontWeight='bold' mt={3}>New water profile</Text>
-          <Flex>
-            <Box>
+          <Flex flexWrap='wrap'>
+            <Box mr={3} mt={2} width={[1, 1 / 4, 1 / 8]}>
               Calcium:&nbsp;{ionsAfterSalts.ca}
             </Box>
-            <Box pl={3}>
+            <Box mr={3} mt={2} width={[1, 1 / 4, 1 / 8]}>
               Magnesium:&nbsp;{ionsAfterSalts.mg}
             </Box>
-            <Box pl={3}>
+            <Box mr={3} mt={2} width={[1, 1 / 4, 1 / 8]}>
               Sodium:&nbsp;{ionsAfterSalts.na}
             </Box>
-            <Box pl={3}>
+            <Box mr={3} mt={2} width={[1, 1 / 4, 1 / 8]}>
               Chloride:&nbsp;{ionsAfterSalts.cl}
             </Box>
-            <Box pl={3}>
+            <Box mr={3} mt={2} width={[1, 1 / 4, 1 / 8]}>
               Sulfate:&nbsp;{ionsAfterSalts.so}
             </Box>
-            <Box pl={3}>
+            <Box mt={2} width={[1, 1 / 4, 1 / 8]}>
               Bicarbonates:&nbsp;{ionsAfterSalts.hco}
             </Box>
           </Flex>
