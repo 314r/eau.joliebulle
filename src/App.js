@@ -356,7 +356,9 @@ function App () {
           />
         </Box>
         <Box>
-          <Text fontWeight='bold' sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} mt={4} color='#FF00AA'>New water profile</Text>
+          <Text fontWeight='bold' sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontSize={1} mt={4} color='#FF00AA'>
+            New water profile
+          </Text>
           <Flex flexWrap='wrap'>
             <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mt={2} mr={2} width={[1, 1 / 4, 1 / 4]}>
               Calcium:&nbsp;{Math.round(dilutedIons.ca * 10) / 10}&nbsp;ppm
@@ -422,7 +424,7 @@ function App () {
           </Flex>
         </Box>
         <Box>
-          <Text fontWeight='bold' sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} mt={4} color='#FF00AA'>New water profile</Text>
+          <Text fontWeight='bold' sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontSize={1} mt={4} color='#FF00AA'>New water profile</Text>
           <Flex flexWrap='wrap'>
             <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mr={2} mt={2} width={[1, 1 / 4, 1 / 4]}>
               Calcium:&nbsp;{Math.round(ionsAfterSalts.ca * 10) / 10}&nbsp;ppm
