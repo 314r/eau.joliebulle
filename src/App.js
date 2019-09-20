@@ -105,45 +105,54 @@ function App () {
   }, [salts, dilutedIons, size])
 
   const onIonChange = e => {
+    const value = e.target.value.length > 0 ? parseFloat(e.target.value) : ions[e.target.name]
     setIons({ ...ions,
-      [e.target.name]: parseFloat(e.target.value)
+      [e.target.name]: value
     })
     setDiluted(scaleIons({ ...ions,
-      [e.target.name]: parseFloat(e.target.value)
+      [e.target.name]: value
     }, dilutionRatio / 100))
   }
 
   const onRatioChanged = e => {
-    setRatio(parseFloat(e.target.value))
+    const value = e.target.value.length > 0 ? parseFloat(e.target.value) : ratio
+    setRatio(value)
   }
 
   const onSizeChanged = e => {
-    setSize(parseFloat(e.target.value))
+    const value = e.target.value.length > 0 ? parseFloat(e.target.value) : size
+    const validatedValue = value === 0 ? 0.1 : value
+    setSize(validatedValue)
   }
 
   const onRoastedChanged = e => {
-    setRoasted(parseFloat(e.target.value) / 100)
+    const value = e.target.value.length > 0 ? parseFloat(e.target.value) : roasted
+    setRoasted(value / 100)
   }
 
   const onColorChanged = e => {
-    setColor(parseFloat(e.target.value))
+    const value = e.target.value.length > 0 ? parseFloat(e.target.value) : color
+    setColor(value)
   }
 
   const onDilutionRatioChanged = e => {
-    setDilutionRatio(parseFloat(e.target.value))
-    const ratio = parseFloat(e.target.value) / 100
+    const value = e.target.value.length > 0 ? parseFloat(e.target.value) : dilutionRatio
+    setDilutionRatio(value)
+    const ratio = value / 100
     setDiluted(scaleIons(ions, ratio))
   }
 
   const onSaltChanged = e => {
+    const value = e.target.value.length > 0 ? parseFloat(e.target.value) : salts[e.target.name]
     setSalts({
       ...salts,
-      [e.target.name]: parseFloat(e.target.value)
+      [e.target.name]: value
     })
   }
 
   const onLacticChanged = e => {
-    setLactic(parseFloat(e.target.value))
+    const value = e.target.value.length > 0 ? parseFloat(e.target.value) : lactic
+    setLactic(value)
   }
 
   return (
@@ -224,7 +233,7 @@ function App () {
                 type='number'
                 min='0'
                 step='0.1'
-                defaultValue={size}
+                value={size}
                 onChange={onSizeChanged}
               />
             </Flex>
