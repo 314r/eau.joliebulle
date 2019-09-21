@@ -1,4 +1,7 @@
-Scripts :
+##License
+MIT
+
+## Scripts :
 
 ### `npm start`
 
