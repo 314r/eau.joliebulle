@@ -56,6 +56,7 @@ function App () {
   })
   const [ionsAfterSalts, setIonsAfterSalts] = useState(ions)
   const [lactic, setLactic] = useState(0)
+  const [acidMalt, setAcidMalt] = useState(0)
 
   useEffect(() => {
     setAlk(calcAlk(ions.hco))
@@ -73,10 +74,11 @@ function App () {
   }, [ionsAfterSalts.hco, ionsAfterSalts.ca, ionsAfterSalts.mg])
 
   useEffect(() => {
-    const alk = (-0.88 * 1.209 / 90.08) * 1000 * 50 * lactic / size
-    const ra = (calcRa(calcAlk(ionsAfterSalts.hco), ionsAfterSalts.ca, ionsAfterSalts.mg)) + alk
+    const alkLac = (-0.88 * 1.209 / 90.08) * 1000 * 50 * lactic / size
+    const alkMalt = (-0.03 / 90.08) * 1000 * 50 * acidMalt / size
+    const ra = (calcRa(calcAlk(ionsAfterSalts.hco), ionsAfterSalts.ca, ionsAfterSalts.mg)) + alkLac + alkMalt
     setRa(ra)
-  }, [lactic, ionsAfterSalts.hco, ionsAfterSalts.ca, ionsAfterSalts.mg, size])
+  }, [lactic, acidMalt, ionsAfterSalts.hco, ionsAfterSalts.ca, ionsAfterSalts.mg, size])
 
   useEffect(() => {
     setSlope(0.037 + 0.014 * ratio)
@@ -154,6 +156,11 @@ function App () {
   const onLacticChanged = e => {
     const value = e.target.value.length > 0 ? parseFloat(e.target.value) : lactic
     setLactic(value)
+  }
+
+  const onAcidMaltChanged = e => {
+    const value = e.target.value.length > 0 ? parseFloat(e.target.value) : acidMalt
+    setAcidMalt(value)
   }
 
   return (
@@ -451,7 +458,7 @@ function App () {
         <Box as='form'
           onSubmit={e => e.preventDefault()}
           py={3} >
-          <Flex>
+          <Flex flexDirection='column'>
             <Box pr={2}>
               <Label>Lactic acid 88% (ml)</Label>
               <Input
@@ -463,6 +470,19 @@ function App () {
                 defaultValue='0'
                 onChange={onLacticChanged}
               />
+            </Box>
+            <Box pr={2} mt={4}>
+              <Label>Acid malt (g)</Label>
+              <Input
+                width={100}
+                id='acidMalt'
+                name='acidMalt'
+                type='number'
+                min='0'
+                defaultValue='0'
+                onChange={onAcidMaltChanged}
+              />
+              <Text>Do not forget to adjust color and mash thickness when adding acid malt</Text>
             </Box>
           </Flex>
         </Box>
