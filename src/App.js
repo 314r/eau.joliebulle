@@ -57,6 +57,7 @@ function App () {
   const [ionsAfterSalts, setIonsAfterSalts] = useState(ions)
   const [lactic, setLactic] = useState(0)
   const [acidMalt, setAcidMalt] = useState(0)
+  const [phosphoric, setPhosphoric] = useState(0)
 
   useEffect(() => {
     setAlk(calcAlk(ions.hco))
@@ -76,9 +77,10 @@ function App () {
   useEffect(() => {
     const alkLac = (-0.88 * 1.209 / 90.08) * 1000 * 50 * lactic / size
     const alkMalt = (-0.03 / 90.08) * 1000 * 50 * acidMalt / size
-    const ra = (calcRa(calcAlk(ionsAfterSalts.hco), ionsAfterSalts.ca, ionsAfterSalts.mg)) + alkLac + alkMalt
+    const alkPho = (-0.1 * 1.05 / 98) * 1000 * 50 * phosphoric / size
+    const ra = (calcRa(calcAlk(ionsAfterSalts.hco), ionsAfterSalts.ca, ionsAfterSalts.mg)) + alkLac + alkMalt + alkPho
     setRa(ra)
-  }, [lactic, acidMalt, ionsAfterSalts.hco, ionsAfterSalts.ca, ionsAfterSalts.mg, size])
+  }, [lactic, acidMalt, phosphoric, ionsAfterSalts.hco, ionsAfterSalts.ca, ionsAfterSalts.mg, size])
 
   useEffect(() => {
     setSlope(0.037 + 0.014 * ratio)
@@ -161,6 +163,11 @@ function App () {
   const onAcidMaltChanged = e => {
     const value = e.target.value.length > 0 ? parseFloat(e.target.value) : acidMalt
     setAcidMalt(value)
+  }
+
+  const onPhosphoricChanged = e => {
+    const value = e.target.value.length > 0 ? parseFloat(e.target.value) : phosphoric
+    setPhosphoric(value)
   }
 
   return (
@@ -483,6 +490,18 @@ function App () {
                 onChange={onAcidMaltChanged}
               />
               <Text>Do not forget to adjust color and mash thickness when adding acid malt</Text>
+            </Box>
+            <Box pr={2} mt={4}>
+              <Label>Phosphoric acid 10% (ml)</Label>
+              <Input
+                width={100}
+                id='phosphoric'
+                name='phosphoric'
+                type='number'
+                min='0'
+                defaultValue='0'
+                onChange={onPhosphoricChanged}
+              />
             </Box>
           </Flex>
         </Box>
