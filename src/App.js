@@ -397,8 +397,9 @@ function App () {
           </Box>
         </Box>
 
-        <Heading fontSize={5} mt={5} mb={4}>Alkalinity control</Heading>
-        <Heading>Dilution with reverse-osmosis water</Heading>
+        <Heading fontSize={5} mt={5} mb={2}>Alkalinity control</Heading>
+        <hr style={{ border: 'none', height: '2px', borderWidth: '2px', borderRadius: '1px', backgroundColor: 'rgb(211, 211, 211)' }} />
+        <Heading mt={4}>Dilution with reverse-osmosis water</Heading>
         <Box as='form'
           onSubmit={e => e.preventDefault()} mt={4}>
           <Label>Dilute the source water at&nbsp;(%)</Label>
@@ -503,8 +504,9 @@ function App () {
             </Box>
           </Flex>
         </Box>
-        <Heading fontSize={5} mt={5} mb={4}>Sparge Water</Heading>
-        <Flex alignItems='center' width={[1, 1 / 2, 1 / 4]}>
+        <Heading fontSize={5} mt={5} mb={2}>Sparge Water</Heading>
+        <hr style={{ border: 'none', height: '4px', borderWidth: '4px', borderRadius: '2px', backgroundColor: 'rgb(80, 80, 80)' }} />
+        <Flex alignItems='center' width={[1, 1 / 2, 1 / 4]} mt={5}>
           <Label width={1}>Sparge water&nbsp;(L)</Label>
           <Input
             width={1 / 4}
@@ -562,7 +564,7 @@ function App () {
         </Box>
         <Ions ions={spargeIons} title={'Sparge Water Profile'} />
         <Box mt={4}>
-          <hr />
+          <hr style={{ border: 'none', height: '2px', borderWidth: '2px', borderRadius: '1px', backgroundColor: 'rgb(211, 211, 211)' }} />
           <Ions ions={totalIons} title={'Total Water Profile (mash + sparge)'} />
         </Box>
 
