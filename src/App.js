@@ -66,6 +66,7 @@ function App () {
     mgso: 0
   })
   const [spargeIons, setSpargeIons] = useState({})
+  const [totalIons, setTotalIons] = useState({})
 
   useEffect(() => {
     setAlk(calcAlk(ions.hco))
@@ -127,6 +128,17 @@ function App () {
       hco: ions.hco
     })
   }, [spargeSalts, ions, sparge])
+
+  useEffect(() => {
+    setTotalIons({
+      ca: (ionsAfterSalts.ca * size + spargeIons.ca * sparge) / (size + sparge),
+      mg: (ionsAfterSalts.mg * size + spargeIons.mg * sparge) / (size + sparge),
+      na: (ionsAfterSalts.na * size + spargeIons.na * sparge) / (size + sparge),
+      cl: (ionsAfterSalts.cl * size + spargeIons.cl * sparge) / (size + sparge),
+      so: (ionsAfterSalts.so * size + spargeIons.so * sparge) / (size + sparge),
+      hco: (ionsAfterSalts.hco * size + spargeIons.hco * sparge) / (size + sparge)
+    })
+  }, [ionsAfterSalts, spargeIons, size, sparge])
 
   const onIonChange = e => {
     const value = e.target.value.length > 0 ? parseFloat(e.target.value) : ions[e.target.name]
@@ -549,6 +561,10 @@ function App () {
           </Flex>
         </Box>
         <Ions ions={spargeIons} title={'Sparge Water Profile'} />
+        <Box mt={4}>
+          <hr />
+          <Ions ions={totalIons} title={'Total Water Profile (mash + sparge)'} />
+        </Box>
 
         <Flex fontWeight='bold' mt={6} justifyContent='space-between' flexWrap='wrap'>
           <Link href='https://github.com/314r/eau.joliebulle' color='#735DD0'>Source Code (MIT Licensed)</Link>
