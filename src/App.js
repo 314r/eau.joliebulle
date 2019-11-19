@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
+import Ions from './Ions.js'
 import { ThemeProvider } from 'emotion-theming'
 import theme from '@rebass/preset'
 import {
@@ -58,6 +59,13 @@ function App () {
   const [lactic, setLactic] = useState(0)
   const [acidMalt, setAcidMalt] = useState(0)
   const [phosphoric, setPhosphoric] = useState(0)
+  const [sparge, setSparge] = useState(0)
+  const [spargeSalts, setSpargeSalts] = useState({
+    caso: 0,
+    cacl: 0,
+    mgso: 0
+  })
+  const [spargeIons, setSpargeIons] = useState({})
 
   useEffect(() => {
     setAlk(calcAlk(ions.hco))
@@ -109,14 +117,24 @@ function App () {
     setIonsAfterSalts(newWater)
   }, [salts, dilutedIons, size])
 
+  useEffect(() => {
+    setSpargeIons(sparge === 0 ? { ...ions } : {
+      ca: ions.ca + (0.2328 * spargeSalts.caso * 1000 + 0.2726 * spargeSalts.cacl * 1000) / sparge,
+      mg: ions.mg + (0.0986 * spargeSalts.mgso * 1000) / sparge,
+      na: ions.na,
+      cl: ions.cl + (0.4823 * spargeSalts.cacl * 1000) / sparge,
+      so: ions.so + (0.5577 * spargeSalts.caso * 1000 + 0.3896 * spargeSalts.mgso * 1000) / sparge,
+      hco: ions.hco
+    })
+  }, [spargeSalts, ions, sparge])
+
   const onIonChange = e => {
     const value = e.target.value.length > 0 ? parseFloat(e.target.value) : ions[e.target.name]
-    setIons({ ...ions,
-      [e.target.name]: value
-    })
+    setIons({ ...ions, [e.target.name]: value })
     setDiluted(scaleIons({ ...ions,
       [e.target.name]: value
     }, dilutionRatio / 100))
+    setSpargeIons({ ...ions, [e.target.name]: value })
   }
 
   const onRatioChanged = e => {
@@ -168,6 +186,20 @@ function App () {
   const onPhosphoricChanged = e => {
     const value = e.target.value.length > 0 ? parseFloat(e.target.value) : phosphoric
     setPhosphoric(value)
+  }
+
+  const onSpargeChanged = e => {
+    const value = e.target.value.length > 0 ? parseFloat(e.target.value) : sparge
+    const validatedValue = value === 0 ? 0.1 : value
+    setSparge(validatedValue)
+  }
+
+  const onSpargeSaltChanged = e => {
+    const value = e.target.value.length > 0 ? parseFloat(e.target.value) : spargeSalts[e.target.name]
+    setSpargeSalts({
+      ...spargeSalts,
+      [e.target.name]: value
+    })
   }
 
   return (
@@ -370,31 +402,7 @@ function App () {
             onChange={onDilutionRatioChanged}
           />
         </Box>
-        <Box>
-          <Text fontWeight='bold' sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontSize={1} mt={4} color='#FF00AA'>
-            New water profile
-          </Text>
-          <Flex flexWrap='wrap'>
-            <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mt={2} mr={2} width={[1, 1 / 4, 1 / 4]}>
-              Calcium:&nbsp;{Math.round(dilutedIons.ca * 10) / 10}&nbsp;ppm
-            </Text>
-            <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mt={2} mr={2} width={[1, 1 / 4, 1 / 4]}>
-              Magnesium:&nbsp;{Math.round(dilutedIons.mg * 10) / 10}&nbsp;ppm
-            </Text>
-            <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mt={2} mr={2} width={[1, 1 / 4, 1 / 4]}>
-              Sodium:&nbsp;{Math.round(dilutedIons.na * 10) / 10}&nbsp;ppm
-            </Text>
-            <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mt={2} mr={2} width={[1, 1 / 4, 1 / 4]}>
-              Chloride:&nbsp;{Math.round(dilutedIons.cl * 10) / 10}&nbsp;ppm
-            </Text>
-            <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mt={2} mr={2} width={[1, 1 / 4, 1 / 4]}>
-              Sulfate:&nbsp;{Math.round(dilutedIons.so * 10) / 10}&nbsp;ppm
-            </Text>
-            <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mt={2} width={[1, 1 / 4, 1 / 8]}>
-              Bicarbonates:&nbsp;{Math.round(dilutedIons.hco * 10) / 10}&nbsp;ppm
-            </Text>
-          </Flex>
-        </Box>
+        <Ions ions={dilutedIons} title={'New Water Profile'} />
         <Heading mt={5}>Salt additions</Heading>
         <Box as='form'
           onSubmit={e => e.preventDefault()}
@@ -438,29 +446,7 @@ function App () {
             </Box>
           </Flex>
         </Box>
-        <Box>
-          <Text fontWeight='bold' sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontSize={1} mt={4} color='#FF00AA'>New water profile</Text>
-          <Flex flexWrap='wrap'>
-            <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mr={2} mt={2} width={[1, 1 / 4, 1 / 4]}>
-              Calcium:&nbsp;{Math.round(ionsAfterSalts.ca * 10) / 10}&nbsp;ppm
-            </Text>
-            <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mr={2} mt={2} width={[1, 1 / 4, 1 / 4]}>
-              Magnesium:&nbsp;{Math.round(ionsAfterSalts.mg * 10) / 10}&nbsp;ppm
-            </Text>
-            <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mr={2} mt={2} width={[1, 1 / 4, 1 / 4]}>
-              Sodium:&nbsp;{Math.round(ionsAfterSalts.na * 10) / 10}&nbsp;ppm
-            </Text>
-            <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mr={2} mt={2} width={[1, 1 / 4, 1 / 4]}>
-              Chloride:&nbsp;{Math.round(ionsAfterSalts.cl * 10) / 10}&nbsp;ppm
-            </Text>
-            <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mr={2} mt={2} width={[1, 1 / 4, 1 / 4]}>
-              Sulfate:&nbsp;{Math.round(ionsAfterSalts.so * 10) / 10}&nbsp;ppm
-            </Text>
-            <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mt={2} width={[1, 1 / 4, 1 / 8]}>
-              Bicarbonates:&nbsp;{Math.round(ionsAfterSalts.hco * 10) / 10}&nbsp;ppm
-            </Text>
-          </Flex>
-        </Box>
+        <Ions ions={ionsAfterSalts} title={'New Water Profile'} />
         <Heading mt={5}>Acid additions</Heading>
         <Box as='form'
           onSubmit={e => e.preventDefault()}
@@ -505,6 +491,65 @@ function App () {
             </Box>
           </Flex>
         </Box>
+        <Heading fontSize={5} mt={5} mb={4}>Sparge Water</Heading>
+        <Flex alignItems='center' width={[1, 1 / 2, 1 / 4]}>
+          <Label width={1}>Sparge water&nbsp;(L)</Label>
+          <Input
+            width={1 / 4}
+            id='sparge'
+            name='sparge'
+            type='number'
+            min='0'
+            step='0.1'
+            value={sparge}
+            onChange={onSpargeChanged}
+          />
+        </Flex>
+        <Heading mt={5}>Salt additions</Heading>
+        <Box as='form'
+          onSubmit={e => e.preventDefault()}
+          py={3} mt={3}>
+          <Flex flexWrap='wrap'>
+            <Box mr={2} mt={2} width={[1, 1 / 4, 1 / 8]}>
+              <Label>CaSO4&nbsp;(g)</Label>
+              <Input
+                width={100}
+                id='caso'
+                name='caso'
+                type='number'
+                min='0'
+                defaultValue='0'
+                onChange={onSpargeSaltChanged}
+              />
+            </Box>
+            <Box mr={2} mt={2} width={[1, 1 / 4, 1 / 8]}>
+              <Label>CaCl2&nbsp;(g)</Label>
+              <Input
+                width={100}
+                id='cacl'
+                name='cacl'
+                type='number'
+                min='0'
+                defaultValue='0'
+                onChange={onSpargeSaltChanged}
+              />
+            </Box>
+            <Box mr={2} mt={2} width={[1, 1 / 4, 1 / 8]}>
+              <Label>MgSO4&nbsp;(g)</Label>
+              <Input
+                width={100}
+                id='mgso'
+                name='mgso'
+                type='number'
+                min='0'
+                defaultValue='0'
+                onChange={onSpargeSaltChanged}
+              />
+            </Box>
+          </Flex>
+        </Box>
+        <Ions ions={spargeIons} title={'Sparge Water Profile'} />
+
         <Flex fontWeight='bold' mt={6} justifyContent='space-between' flexWrap='wrap'>
           <Link href='https://github.com/314r/eau.joliebulle' color='#735DD0'>Source Code (MIT Licensed)</Link>
           <Text>Use at your own risks !</Text>
