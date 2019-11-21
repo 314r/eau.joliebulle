@@ -67,6 +67,8 @@ function App () {
   })
   const [spargeIons, setSpargeIons] = useState({})
   const [totalIons, setTotalIons] = useState({})
+  const [spargeLact, setSpargeLact] = useState(0)
+  const [spargePhosph, setSpargePhosph] = useState(0)
 
   useEffect(() => {
     setAlk(calcAlk(ions.hco))
@@ -139,6 +141,13 @@ function App () {
       hco: (ionsAfterSalts.hco * size + spargeIons.hco * sparge) / (size + sparge)
     })
   }, [ionsAfterSalts, spargeIons, size, sparge])
+
+  useEffect(() => {
+    const ra = calcRa(calcAlk(spargeIons.hco), spargeIons.ca, spargeIons.mg) / 50
+    const totalAlkalinity = ra * sparge
+    setSpargeLact(totalAlkalinity * 90.08 / 1000 / 0.88 / 1.209)
+    setSpargePhosph(totalAlkalinity * 98 / 1000 / 0.10 / 1.05)
+  }, [spargeIons])
 
   const onIonChange = e => {
     const value = e.target.value.length > 0 ? parseFloat(e.target.value) : ions[e.target.name]
@@ -566,6 +575,14 @@ function App () {
         <Box mt={4}>
           <hr style={{ border: 'none', height: '2px', borderWidth: '2px', borderRadius: '1px', backgroundColor: 'rgb(211, 211, 211)' }} />
           <Ions ions={totalIons} title={'Total Water Profile (mash + sparge)'} />
+        </Box>
+
+        <Box>
+          <Heading mt={5}>Sparge water acidification</Heading>
+          <Text fontWeight='bold' sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontSize={1} mt={4} color='#FF00AA'>Acid needed to "neutralize" sparge water (residual alkalinity of 0)</Text>
+          <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mt={2}>Lactic acid (88%): {Math.round(spargeLact * 10) / 10} ml</Text>
+          <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mt={2}>OR</Text>
+          <Text sx={{ textTransform: 'uppercase', letterSpacing: '0.1em' }} fontWeight='bold' fontSize={1} mt={2}>Phosphoric acid (10%): {Math.round(spargePhosph * 10) / 10} ml</Text>
         </Box>
 
         <Flex fontWeight='bold' mt={6} justifyContent='space-between' flexWrap='wrap'>
